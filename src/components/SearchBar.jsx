@@ -1,27 +1,28 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useContext } from 'react';
+import { GithubContext } from '../App';
 
-function SearchBar({searchVal, placeHolder}) {
+function SearchBar({ searchVal, placeHolder }) {
+  const { searchTerm, setSearchTerm } = useContext(GithubContext);
 
-  const [inputText, setInputText] = useState({
-    searchTerm: "",
-  });
-  
   const handleChange = (event) => {
-    setInputText({...inputText, [event.target.name]: [event.target.value] });
-  }
+    setSearchTerm(event.target.value); 
+  };
 
   const handleSubmit = (event) => {
+    console.log("attempting submit");
     event.preventDefault();
-    searchVal(inputText.searchTerm);
-  }
+    console.log();
+    searchVal(searchTerm);
+  };
+
   return (
     <>
-    <form onSubmit={handleSubmit}>
-        <input type="text" name="searchTerm" onChange={handleChange} value={inputText.searchTerm} placeholder={placeHolder}/>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="searchTerm" onChange={handleChange} value={searchTerm} placeholder={placeHolder} />
         <input type="submit" value="submit" />
-    </form>
+      </form>
     </>
-  )
+  );
 }
 
-export default SearchBar
+export default SearchBar;
